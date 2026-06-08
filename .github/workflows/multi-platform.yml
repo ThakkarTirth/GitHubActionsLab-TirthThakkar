@@ -1,0 +1,32 @@
+name: Multi-Platform Workflow
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  ubuntu-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: OS Info
+        run: uname -a
+      - name: Create File
+        run: echo "Linux build" > file.txt && cat file.txt
+
+  windows-job:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: OS Info
+        run: systeminfo | findstr /C:"OS Name"
+      - name: Create File
+        run: echo "Windows build" | Out-File file.txt && Get-Content file.txt
+
+  macos-job:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: OS Info
+        run: uname -a
+      - name: Create File
+        run: echo "MacOS build" > file.txt && cat file.txt
